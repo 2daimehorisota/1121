@@ -35,22 +35,9 @@ static ssize_t led_write(struct file* filp, const char* buf, size_t count, loff_
 	return 1;
 }
 
-static ssize_t sushi_read(struct file* filp, char* buf, size_t count, loff_t* pos)
-{
-	int size = 0;
-	char sushi[] = {'s', 'u', 's', 'h', 'i', 0x0A}; //寿司の絵文字のバイナリ
-	if(copy_to_user(buf+size,(const char *)sushi, sizeof(sushi))){
-		printk( KERN_INFO "sushi : copy_to_user failed\n" );
-		return -EFAULT;
-	}
-	size += sizeof(sushi);
-	return size;
-}
-
 static struct file_operations led_fops = {
 	.owner = THIS_MODULE,
 	.write = led_write,
-	.read = sushi_read
 
 };
 
